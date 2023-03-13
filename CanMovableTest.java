@@ -51,5 +51,31 @@ public class CanMovableTest {
 
     }
 
+    @Test
+    void canMovablePawn() throws GameException {
+        Board board = new Board();
+        PawnBlack g5PawnBlack = new PawnBlack("g5",board);
+
+        PawnBlack f5Pawn = new PawnBlack("f5",board);
+        board.items = new Item[]{g5PawnBlack,f5Pawn};
+        Assertions.assertFalse(g5PawnBlack.moveable());
+
+        PawnBlack e5Pawn = new PawnBlack("e5",board);
+        board.items = new Item[]{g5PawnBlack,e5Pawn};
+        Assertions.assertTrue(g5PawnBlack.moveable());
+
+
+        PawnRed d5PawnRed = new PawnRed("d5",board);
+
+        PawnRed e5PawnRed = new PawnRed("e5",board);
+        board.items = new Item[]{d5PawnRed,e5PawnRed};
+        Assertions.assertFalse(d5PawnRed.moveable());
+
+        PawnBlack c5Pawn = new PawnBlack("c5",board);
+        board.items = new Item[]{d5PawnRed,c5Pawn};
+        Assertions.assertTrue(d5PawnRed.moveable());
+
+    }
+
 
 }
