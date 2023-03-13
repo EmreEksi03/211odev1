@@ -1,14 +1,9 @@
 
-public class Item extends AbstractItem{
+public abstract class Item extends AbstractItem{
 
 	@Override
-	public void move(String destination) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public boolean canMove(String destination) {
-		return false;
+	public String toString() {
+		return this.getClass().getSimpleName() + "*" + type.name() + "*" +  getPosition() + "\n";
 	}
 
 }
