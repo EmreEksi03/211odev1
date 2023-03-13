@@ -37,12 +37,12 @@ public class CanMovableTest {
     @Test
     void canMovableElephant() throws GameException {
         Board board = new Board();
-        Elephant c5Elephant = new Elephant("c5",board,Type.Black,Type.Black.getHalf());
+        Elephant c5Elephant = new Elephant("c5",board,Type.Red,Type.Red.getHalf());
 
-        PawnBlack e7Pawn = new PawnBlack("e7",board);
-        PawnBlack e3Pawn = new PawnBlack("e3",board);
-        PawnBlack a7Pawn = new PawnBlack("a7",board);
-        PawnBlack a3Pawn = new PawnBlack("a3",board);
+        PawnRed e7Pawn = new PawnRed("e7",board);
+        PawnRed e3Pawn = new PawnRed("e3",board);
+        PawnRed a7Pawn = new PawnRed("a7",board);
+        PawnRed a3Pawn = new PawnRed("a3",board);
         board.items = new Item[]{c5Elephant,e7Pawn,e3Pawn,a7Pawn,a3Pawn};
         Assertions.assertFalse(c5Elephant.moveable());
 
