@@ -1,12 +1,9 @@
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class Game extends AbstractGame {
@@ -43,6 +40,8 @@ public class Game extends AbstractGame {
     }
 
     boolean isStalemate(Type type) throws GameException {
+        if (isCheck(type))
+            return false;
         for (int j = 1; j < board.getGeneral(type).getAllMoveableSpaces().length; j++) {
             if (!isCheck(type, board.getGeneral(type).getAllMoveableSpaces()[j])) {
                 return false;
@@ -57,6 +56,14 @@ public class Game extends AbstractGame {
 
     @Override
     void play(String from, String to) throws GameException {
+        try {
+            playExited(from, to);
+        } catch (GameExitException e) {
+            System.exit(0);
+        }
+    }
+
+    public void playExited(String from, String to) throws GameException, GameExitException {
         if (moveCount % 2 == 0) {
             playTyped(from, to, Type.Red, Type.Black);
         } else {
@@ -64,7 +71,7 @@ public class Game extends AbstractGame {
         }
     }
 
-    private void playTyped(String from, String to, Type player, Type opponent) throws GameException {
+    private void playTyped(String from, String to, Type player, Type opponent) throws GameException, GameExitException {
         Item[] previous = board.createCopy();
         for (int i = 0; i < board.items.length; i++) {
             if (board.items[i].getPosition().equals(from) && board.items[i].type.equals(player)) {
@@ -78,6 +85,7 @@ public class Game extends AbstractGame {
                     board.print();
                     if (isStalemate(opponent)){
                         System.out.println("PAT!");
+                        throw new GameExitException();
                     }
                     if (isCheckMate(opponent)) {
                         for (int j = 0; j < board.items.length; j++) {
@@ -93,6 +101,7 @@ public class Game extends AbstractGame {
                         if (player.equals(Type.Black))
                             System.out.println("ŞAH MAT!" + black.name + " oyunu kazandı.");
                         System.out.println(red.name + "'s points: " + red.puan + " " + black.name + "'s points: " + black.puan);
+                        throw new GameExitException();
                     }
                     return;
                 }
@@ -106,6 +115,7 @@ public class Game extends AbstractGame {
                     board.print();
                     if (isStalemate(opponent)){
                         System.out.println("PAT!");
+                        throw new GameExitException();
                     }
                     if (isCheckMate(opponent)) {
                         for (int j = 0; j < board.items.length; j++) {
@@ -121,6 +131,7 @@ public class Game extends AbstractGame {
                         if (player.equals(Type.Black))
                             System.out.println("ŞAH MAT!" + black.name + " oyunu kazandı.");
                         System.out.println(red.name + "'nın puanı: " + red.puan + " " + black.name + "'nın puanı: " + black.puan);
+                        throw new GameExitException();
                     }
                     return;
                 }
@@ -199,6 +210,8 @@ public class Game extends AbstractGame {
             return new Chariot(itemProps[2], board, type);
         if (itemProps[0].equals("Cannon"))
             return new Cannon(itemProps[2], board, type);
+        if (itemProps[0].equals("Horse"))
+            return new Horse(itemProps[2],board,type);
         if (itemProps[0].equals("Elephant"))
             return new Elephant(itemProps[2], board, type, type.getHalf());
         if (itemProps[0].equals("General"))
@@ -256,9 +269,9 @@ public class Game extends AbstractGame {
                 }
                 if (temp.substring(1, 3).equals("Gu")) {
                     if (temp.charAt(0) == 'r')
-                        board.items[i/5] = new General(temp.substring(3), board,Type.Red.getPalace(), Type.Red);
+                        board.items[i/5] = new Guardian(temp.substring(3), board,Type.Red.getPalace(), Type.Red);
                     else if (temp.charAt(0) == 'b')
-                        board.items[i/5] = new General(temp.substring(3), board, Type.Black.getPalace(), Type.Black);
+                        board.items[i/5] = new Guardian(temp.substring(3), board, Type.Black.getPalace(), Type.Black);
                 }
                 if (temp.substring(1, 3).equals("Ho")) {
                     if (temp.charAt(0) == 'r')

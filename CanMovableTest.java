@@ -114,6 +114,46 @@ public class CanMovableTest {
 
 
     }
+    @Test
+    void canMoveableCannon() throws GameException {
+        Board board = new Board();
+        Cannon cannon = new Cannon("c2",board,Type.Red);
+        PawnRed pawnRed = new PawnRed("b2",board);
+        PawnBlack pawnBlack = new PawnBlack("a2",board);
+        PawnRed pawnRed2 = new PawnRed("a2",board);
+        PawnRed pawnRed3 = new PawnRed("c3",board);
+        PawnRed pawnRed4 = new PawnRed("c4",board);
+        PawnRed pawnRed5 = new PawnRed("c1",board);
+        PawnRed pawnRed6 = new PawnRed("d2",board);
+        PawnRed pawnRed7 = new PawnRed("e2",board);
 
+        board.items = new Item[]{cannon,pawnRed,pawnRed2,pawnRed3,pawnRed4,pawnRed5,pawnRed6,pawnRed7};
+        Assertions.assertFalse(cannon.moveable());
+        board.items = new Item[]{cannon,pawnRed,pawnBlack,pawnRed3,pawnRed4,pawnRed5,pawnRed6,pawnRed7};
+        Assertions.assertTrue(cannon.moveable());
+        board.items = new Item[]{cannon,pawnRed3,pawnRed4,pawnRed5,pawnRed6,pawnRed7};
+        Assertions.assertTrue(cannon.moveable());
+    }
+    @Test
+    void canMoveableChariot() throws GameException {
+        Board board = new Board();
+        Chariot chariot = new Chariot("c2",board,Type.Red);
+        PawnRed pawnRed = new PawnRed("b2",board);
+        PawnRed pawnRed2 = new PawnRed("a2",board);
+        PawnRed pawnRed3 = new PawnRed("c3",board);
+        PawnRed pawnRed4 = new PawnRed("c4",board);
+        PawnRed pawnRed5 = new PawnRed("c1",board);
+        PawnRed pawnRed6 = new PawnRed("d2",board);
+        PawnRed pawnRed7 = new PawnRed("e2",board);
+
+        board.items = new Item[]{chariot,pawnRed,pawnRed2,pawnRed3,pawnRed4,pawnRed5,pawnRed6,pawnRed7};
+        Assertions.assertFalse(chariot.moveable());
+        board.items = new Item[]{chariot,pawnRed3,pawnRed4,pawnRed5,pawnRed6,pawnRed7};
+        Assertions.assertTrue(chariot.moveable());
+    }
+    @Test
+    void canMoveableGuardian() throws GameException{
+
+    }
 
 }

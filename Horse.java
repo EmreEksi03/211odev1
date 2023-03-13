@@ -3,6 +3,7 @@ public class Horse extends Item{
         this.board = board;
         this.setPosition(posititon);
         this.type = type;
+        point = 4;
     }
     public Horse(Horse horse) {
         this.board = horse.board;
