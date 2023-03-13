@@ -75,6 +75,41 @@ public class CanMovableTest {
         board.items = new Item[]{d5PawnRed,c5Pawn};
         Assertions.assertTrue(d5PawnRed.moveable());
 
+        PawnBlack e5PawnBlack = new PawnBlack("e5",board);
+        PawnBlack e4Pawn = new PawnBlack("e4",board);
+        PawnBlack e6Pawn = new PawnBlack("e6",board);
+        PawnBlack d5Pawn = new PawnBlack("d5",board);
+        board.items = new Item[]{e5PawnBlack,e4Pawn,e6Pawn,d5Pawn};
+        Assertions.assertFalse(e5PawnBlack.moveable());
+
+        board.items = new Item[]{e5PawnBlack,e6Pawn,d5Pawn};
+        Assertions.assertTrue(e5PawnBlack.moveable());
+
+        board.items = new Item[]{e5PawnBlack,e4Pawn,d5Pawn};
+        Assertions.assertTrue(e5PawnBlack.moveable());
+
+        board.items = new Item[]{e5PawnBlack,e4Pawn,e6Pawn};
+        Assertions.assertTrue(e5PawnBlack.moveable());
+
+    }
+
+    @Test
+    void canMovableGeneral() throws GameException {
+        Board board = new Board();
+        General b5GeneralRed = new General("b5",board,Type.Red.getPalace(), Type.Red);
+
+        PawnRed a5PawnRed = new PawnRed("a5",board);
+        PawnRed c5PawnRed = new PawnRed("c5",board);
+        PawnRed b4PawnRed = new PawnRed("b4",board);
+        PawnRed b6PawnRed = new PawnRed("b6",board);
+        board.items = new Item[]{b5GeneralRed,a5PawnRed,c5PawnRed,b4PawnRed,b6PawnRed};
+        Assertions.assertFalse(b5GeneralRed.moveable());
+
+        board.items = new Item[]{b5GeneralRed,a5PawnRed,c5PawnRed,b6PawnRed};
+        Assertions.assertTrue(b5GeneralRed.moveable());
+
+
+
     }
 
 
