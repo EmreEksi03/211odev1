@@ -105,9 +105,12 @@ public class CanMovableTest {
         board.items = new Item[]{b5GeneralRed,a5PawnRed,c5PawnRed,b4PawnRed,b6PawnRed};
         Assertions.assertFalse(b5GeneralRed.moveable());
 
-        board.items = new Item[]{b5GeneralRed,a5PawnRed,c5PawnRed,b6PawnRed};
+        General j6GeneralBlack = new General("j6",board,Type.Black.getPalace(), Type.Black);
+        board.items = new Item[]{j6GeneralBlack,b5GeneralRed,a5PawnRed,c5PawnRed,b6PawnRed};
         Assertions.assertTrue(b5GeneralRed.moveable());
 
+        board.items = new Item[]{j6GeneralBlack,b5GeneralRed,a5PawnRed,c5PawnRed,b4PawnRed};
+        Assertions.assertFalse(b5GeneralRed.moveable());
 
 
     }
