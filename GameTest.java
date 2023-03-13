@@ -50,18 +50,18 @@ class GameTest {
 
 
         Game game1 = new Game("Red","Black");
-        game1.playExited("a2","c1");
-        game1.playExited("j1","h1");
-        game1.playExited("c2","j2");
-        //game1.playExited("j3","h5");
-        game1.playExited("g1","f1");
-        game1.playExited("a4","b5");
-        game1.playExited("h8","a8");
-        game1.playExited("a9","a8");
-        game1.playExited("j8","h9");
+        game1.play("a2","c1");
+        game1.play("j1","h1");
+        game1.play("c2","j2");
+        Assertions.assertThrows(GameException.class, () -> game1.playExited("j3","h5"));
+        game1.play("g1","f1");
+        game1.play("a4","b5");
+        game1.play("h8","a8");
+        game1.play("a9","a8");
+        game1.play("j8","h9");
     }
     @Test
-    void playExited2() throws GameException, GameExitException {
+    void play2() throws GameException, GameExitException {
         Game g = GameMother.getGame();
         g.playExited("a1","c1");
         Assertions.assertThrows(GameException.class, () -> g.playExited("c1","d1"));
@@ -81,5 +81,17 @@ class GameTest {
         General generalBlack2 = new General("j5",game.board,Type.Black.getPalace(), Type.Black);
         game.board.items = new Item[]{chariotRed3,chariotRed4,chariotRed5,generalBlack2,generalRed2};
         Assertions.assertThrows(GameExitException.class, () -> game.playExited("g3","g4"));
+    }
+
+    @Test
+    void play3() throws GameException, GameExitException {
+        Game game = new Game("r","b");
+        Chariot chariotRed3 = new Chariot("g4",game.board,Type.Red);
+        Chariot chariotRed4 = new Chariot("g6",game.board,Type.Red);
+        Chariot chariotRed5 = new Chariot("i1",game.board,Type.Red);
+        General generalRed2 = new General("a3",game.board,Type.Red.getPalace(), Type.Red);
+        General generalBlack2 = new General("j5",game.board,Type.Black.getPalace(), Type.Black);
+        game.board.items = new Item[]{chariotRed3,chariotRed4,chariotRed5,generalBlack2,generalRed2};
+        Assertions.assertThrows(GameExitException.class, () -> game.playExited("a3","a4"));
     }
 }
